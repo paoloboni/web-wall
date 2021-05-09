@@ -53,6 +53,12 @@ app.get('/screenshots', (req, res) => {
             })
             .then(file => {
                 return captureWebsite.file(website.url, file.path, {
+                        launchOptions: {
+                            args: [
+                                '--no-sandbox',
+                                '--disable-setuid-sandbox'
+                            ]
+                        },
                         overwrite: true,
                         headers: website.headers,
                         cookies: website.cookies,
