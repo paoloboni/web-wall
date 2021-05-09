@@ -20,6 +20,7 @@ jobs:
           - 10
           - 12
           - 14
+          - 16
         architecture:
           - x64
     name: Node ${{ matrix.node_version }} - ${{ matrix.architecture }} on ${{ matrix.os }}
