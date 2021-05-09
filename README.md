@@ -40,7 +40,8 @@ Configure the refresh interval and the URLs you want to fetch in the file `confi
 ```
 [~/web-wall]$ cat config/default.json
 {
-  "refreshInterval": "10",
+  "refreshInterval": 10,
+  "columns": 2,
   "websites": [
     {
       "url": "https://time.is/",
@@ -74,15 +75,47 @@ These variables are used to template the HTML page so that it can talk to the se
 
 ## Run it
 
+### Docker
+
+```
+[~/.]$ docker run -p 8080:8080 docker.pkg.github.com/paoloboni/web-wall/web-wall
+```
+
+#### Override the configuration
+
+Assuming you created a configuration file `customised-config.json` under your home directory:
+
+```
+[~/.]$ docker run \
+    -p 8080:8080 \
+    -v $(pwd)/customised-config.json:/usr/src/config/default.json \
+    docker.pkg.github.com/paoloboni/web-wall/web-wall
+```
+
+#### Environment variables
+
+You can use the same environment variables listed above to configure server port, host and request scheme.
+
+For instance, you may want to run the container on the port 9090 instead of the default one:
+
+```
+[~/.]$ docker run \
+    -e SERVER_PORT=9090 \
+    -p 9090:9090 \
+    docker.pkg.github.com/paoloboni/web-wall/web-wall
+```
+
+### Locally
+
 The only requirement is to have [Node.js](https://nodejs.dev) installed.
 
-### Install the dependencies
+#### Install the dependencies
 
 ```
 [~/web-wall]$ npm install
 ```
 
-### Run the server
+#### Run the server
 
 ```
 [~/web-wall]$ npm start
@@ -93,7 +126,7 @@ The only requirement is to have [Node.js](https://nodejs.dev) installed.
 app listening at http://localhost:8080
 ```
 
-### Run the tests
+#### Run the tests
 
 ```
 [~/web-wall]$ npm test
